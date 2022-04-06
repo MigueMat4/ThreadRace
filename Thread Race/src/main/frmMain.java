@@ -10,6 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 
+
+
 /**
  *
  * @author Miguel
@@ -50,24 +52,52 @@ public class frmMain extends javax.swing.JFrame {
             this.miEtiqueta = etiqueta;
         }
         
+        public class Monitor {
+            boolean monitorOcupado;
+            int N;
+            
+            public void Inicia{
+                if (monitorOcupado == false){
+                    
+                }
+                else{ 
+                    N++;
+                    if (N == 3){
+                        monitorOcuapdo = true;
+                    }
+                }
+            }
+            
+            public void Termina{}
+            
+        } 
+        
+        
+        
         @Override
         public void run() {
             // Operaciones pre región crítica
             this.numeroAGenerar = (int)(Math.random()* 9 + 1);
             this.miEtiqueta.setText(String.valueOf(numeroAGenerar));
             // Región crítica
+            
             try {
-                mutex.acquire();
+                // monitor inicia //
             } catch (InterruptedException ex) {
                 Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            
             regionCritica[posicion] = this.numeroAGenerar;
             String contenidoRC = "[" + String.valueOf(regionCritica[0]) + "]";
             contenidoRC += "[" + String.valueOf(regionCritica[1]) + "]";
             contenidoRC += "[" + String.valueOf(regionCritica[2]) + "]";
             lblRegionCritica.setText(contenidoRC);
             posicion++;
-            mutex.release(); // Libera región crítica
+            
+            // Monitor termina//
+            
+            
             // Operaciones post región crítica
             System.out.println("Proceso finalizado con status: 0");
         }
